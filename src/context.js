@@ -23,19 +23,23 @@ export const ContextProvider = ({ children }) => {
 	};
 
 	value.addToBasket = (item) => {
-		dispatch({ type: 'ADD_FROM_BASKET', payload: { item: item } });
+		dispatch({ type: 'ADD_TO_BASKET', payload: { item: item } });
 	};
 
 	value.incQuantity = (mainId) => {
 		dispatch({ type: 'INC_QUANTITY', payload: { mainId: mainId } });
 	};
 
-	value.incQuantity = (mainId) => {
+	value.decQuantity = (mainId) => {
 		dispatch({ type: 'DEC_QUANTITY', payload: { mainId: mainId } });
 	};
 
 	value.handleBasketShow = () => {
-		dispatch({ type: 'BASKET_SHOW' });
+		dispatch({ type: 'TOGGLE_BASKET' });
+	};
+
+	value.setGoods = (data) => {
+		dispatch({ type: 'SET_GOODS', payload: data });
 	};
 
 	return (

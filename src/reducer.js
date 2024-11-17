@@ -1,14 +1,13 @@
 export function reducer(state, { type, payload }) {
 	switch (type) {
-		case 'ADD_FROM_BASKET': {
+		case 'ADD_TO_BASKET': {
 			const itemIndex = state.order.findIndex(
-				(orderItem) => orderItem.mainId === payload.mainId
+				(orderItem) => orderItem.mainId === payload.item.mainId
 			);
-
 			let newOrder = null;
 			if (itemIndex < 0) {
 				const newItem = {
-					...payload,
+					...payload.item,
 					quantity: 1,
 				};
 				newOrder = [...state.order, newItem];
@@ -24,10 +23,19 @@ export function reducer(state, { type, payload }) {
 					}
 				});
 			}
+
 			return {
 				...state,
 				order: newOrder,
-				alertName: payload.name,
+				alertName: payload.item.displayName,
+			};
+		}
+
+		case 'SET_GOODS': {
+			return {
+				...state,
+				goods: payload || [],
+				loading: false,
 			};
 		}
 
@@ -62,8 +70,8 @@ export function reducer(state, { type, payload }) {
 					}
 				}),
 			};
-            
-		case 'TOGGLE_BBASKET':
+
+		case 'TOGGLE_BASKET':
 			return {
 				...state,
 				isBasketShow: !state.isBasketShow,
